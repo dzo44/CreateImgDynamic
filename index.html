@@ -1,0 +1,62 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slika{
+            width: 120px;
+            height: 90px;
+            margin: 10px;
+            float:left;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" name="File1" id="File1" multiple style="display: none;" onchange="Priakzi()">
+    <a id="a1" href="#" onclick="Odaberi()">Odaberi slike</a>
+    <br>
+    <br>
+    <div id="div1">
+
+    </div>
+    <script>
+        var File1 = document.getElementById("File1");
+        var a1 = document.getElementById("a1");
+        var div1 = document.getElementById("div1");
+        function Odaberi() {
+            event.preventDefault();// uklanja #
+
+            File1.click();
+        }
+
+        function Priakzi() {
+            var fajlovi = File1.files;
+
+            if (fajlovi.length > 0) {
+                for(let i=0; i<fajlovi.length;i++)
+                {
+                    var fajl = fajlovi[i];
+
+                    if (fajl.type.match(/image.*/)) {
+                        let reader = new FileReader();
+                        reader.readAsDataURL(fajl);                       
+                        reader.onload = function () {
+                        let slika = document.createElement("img");
+                            
+                        slika.src = reader.result;
+                        slika.setAttribute("class","slika");
+                        div1.appendChild(slika);
+                        };
+                    }
+                }
+            }
+            else{
+                alert("Odaberite slike")
+            }
+        }
+    </script>
+</body>
+</html>
